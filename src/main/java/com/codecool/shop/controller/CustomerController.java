@@ -17,6 +17,8 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +28,11 @@ import static com.codecool.shop.model.CurrentUser.isUserLoggedIn;
 
 public class CustomerController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+
     public static void createCustomer(Request req) {
+        logger.info("Started createCustomer method");
+
         String checkb = req.queryParams("checkb");
         CustomerDao customerDao = CustomerDaoMem.getInstance();
         customerDao.remove(1);
@@ -46,9 +52,11 @@ public class CustomerController {
             customerDao.add(new Customer(req.queryParams("first_name"), req.queryParams("last_name"), req.queryParams("email"), req.queryParams("phone"),
                     billingAddress, shippingAddress));
         }
+        logger.info("Exited createCustomer method.");
     }
 
     public static void registerCustomer(Request req) {
+        logger.info("Started registerCustomer method");
         CustomerDao customerDao = CustomerDaoJDBC.getInstance();
         UserDao userDao = UserDaoJDBC.getInstance();
         String checkb = req.queryParams("checkb");
@@ -79,6 +87,7 @@ public class CustomerController {
             userDao.add(us1);
             RequestUtil.setSessionUser(req, us1.getUsername());
         }
+        logger.info("Exited registerCustomer method.");
     }
 
     public static Route registerUser = (Request req, Response res) -> {

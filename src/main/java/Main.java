@@ -5,6 +5,8 @@ import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.login.LoginHandler;
 import com.codecool.shop.util.DbConnect;
 import com.codecool.shop.util.ExampleData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -15,6 +17,7 @@ import java.util.HashMap;
 
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
         String CONNECTIONCONFIGFILE="src/main/resources/connection/properties/connectionProperties.txt";
@@ -26,7 +29,6 @@ public class Main {
 
         // populate some data for the memory storage
         ExampleData.populateData();
-
         get("/", ProductController.renderAllProducts);
         get("/index", ProductController.renderAllProducts);
 
@@ -48,6 +50,7 @@ public class Main {
         post("/delete-from-cart", ProductController.deleteFromCart);
         post("/get-shoppingcart-size",ProductController.shoppingCartSize);
         post("/register", CustomerController.registerUser);
+        logger.info("Spark routes successful set up.");
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();

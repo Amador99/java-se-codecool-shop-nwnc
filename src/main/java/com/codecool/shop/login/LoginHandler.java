@@ -5,6 +5,8 @@ import com.codecool.shop.dao.implementation.database.ShoppingCartDaoJDBC;
 import com.codecool.shop.model.ShoppingCart;
 import com.codecool.shop.model.User;
 import com.codecool.shop.util.RequestUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -14,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginHandler {
+    private static final Logger logger = LoggerFactory.getLogger(LoginHandler.class);
 
     public static Route manageLogin = (Request request, Response response) -> {
 
@@ -59,6 +62,7 @@ public class LoginHandler {
             response.redirect("/index");
             return null;
         }
+        logger.info("Admin successfuly logged in.");
         Map<String, Object> model = new HashMap<>();
         return new ThymeleafTemplateEngine().render(new ModelAndView(model, "product/admin"));
     };
@@ -73,6 +77,7 @@ public class LoginHandler {
     public static Route logout = (Request req, Response res) -> {
         req.session().removeAttribute("currentuser");
         res.redirect("/index");
+        logger.info("User successfuly logged out.");
         return null;
     };
 

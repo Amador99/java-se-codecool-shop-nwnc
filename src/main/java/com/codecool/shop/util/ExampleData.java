@@ -5,6 +5,8 @@ import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.database.*;
 import com.codecool.shop.dao.implementation.memory.UserDaoMem;
 import com.codecool.shop.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -12,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ExampleData {
+    private static final Logger logger = LoggerFactory.getLogger(ExampleData.class);
 
     public static void populateData() {
         DatabaseMetaData dbm = null;
@@ -21,6 +24,7 @@ public class ExampleData {
             if (!tables.next()) {
                 fillDatabase();
             }
+            logger.info("Database succesfully filled with suppliers, categories, users and products");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -64,6 +68,7 @@ public class ExampleData {
         }
 
         fillDatabaseWithExampleData();
+
     }
 
         private static void fillDatabaseWithExampleData() {
