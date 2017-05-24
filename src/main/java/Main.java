@@ -15,6 +15,9 @@ import sun.rmi.runtime.Log;
 
 import java.util.HashMap;
 
+/**
+ * Webshop project with Spark and Thymeleaf.
+ */
 
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
